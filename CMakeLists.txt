@@ -28,11 +28,11 @@ add_library(ACADO STATIC IMPORTED)
 
 add_executable(mpc_node src/mpc_node.cpp)
 set_target_properties(ACADO PROPERTIES IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/acado_mpc_export/libacado_exported_rti.a")
-target_link_libraries(mpc_node ${catkin_LIBRARIES} ACADO ipopt)
+target_link_libraries(mpc_node ${catkin_LIBRARIES} ACADO)
 
 add_executable(test_node src/test_node.cpp)
 set_target_properties(ACADO PROPERTIES IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/acado_mpc_export/libacado_exported_rti.a")
-target_link_libraries(test_node ${catkin_LIBRARIES} ACADO ipopt)
+target_link_libraries(test_node ${catkin_LIBRARIES} ACADO)
 
 add_executable(path_generator src/make_path.cpp)
 target_link_libraries(path_generator ${catkin_LIBRARIES})

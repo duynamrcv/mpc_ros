@@ -1,4 +1,4 @@
-# Install script for directory: /home/duynam/vast_ws/src/mpc/acado_export_code
+# Install script for directory: /home/duynam/vast_ws/src/mpc_ros/acado_export_code
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/duynam/vast_ws/src/mpc/acado_export_code/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/duynam/vast_ws/src/mpc_ros/acado_export_code/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

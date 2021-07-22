@@ -85,8 +85,6 @@ extern "C"
 #define ACADO_RK_NIS 9
 /** Number of Runge-Kutta stages per integration step. */
 #define ACADO_RK_NSTAGES 3
-/** Single versus double precision data type representation. */
-#define ACADO_SINGLE_PRECISION 0
 /** Providing interface for arrival cost. */
 #define ACADO_USE_ARRIVAL_COST 0
 /** Indicator for usage of non-hard-coded linear terms in the objective. */

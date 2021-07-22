@@ -7,10 +7,10 @@
             y = y_radius * y_func(PI/4 * ky * t * 0.2)
         -->
         <!-- Radius <= 5.0; k <= 1.0 -->
-        <param name="x_radius"  type="double"   value="2.0"/>
+        <param name="x_radius"  type="double"   value="5.0"/>
         <param name="y_radius"  type="double"   value="5.0"/>
         <param name="kx"        type="double"   value="1.0"/>
-        <param name="ky"        type="double"   value="0.5"/>
+        <param name="ky"        type="double"   value="1.5"/>
         <!-- x,y_func can be sin, cos, default = sin -->
         <param name="x_func"    type="string"   value="sin"/>   
         <param name="y_func"    type="string"   value="cos"/>
