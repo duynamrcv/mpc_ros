@@ -41,5 +41,20 @@ $ cd ~/catkin_ws/
 $ catkin_make
 ```
 
+## Run
+For robot simulator, please visit [VAST robot](https://github.com/duynamrcv/vast_robot).
+```
+# Open robot simulator
+$ roslaunch vast_gazebo robot.launch
+
+# You can consider 2 case to run
+# Case 1: Run all node
+$ roslaunch mpc_ros run_all.launch
+
+# Case 2: Run each node
+$ roslaunch mpc_ros run_path_generator.launch
+$ roslaunch mpc_ros run_mpc.launch
+```
+
 ## Demo
 ![](results/demo_mpc.mp4)
