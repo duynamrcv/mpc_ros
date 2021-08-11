@@ -111,7 +111,6 @@ int main(int argc, char **argv)
     control_output = init_acado();
 
     // cout << control_output[0][0] << endl;
-	double start_time = ros::Time::now().toSec();
     ros::Rate r(10);
 
 	double goal_x, goal_y;
