@@ -16,7 +16,7 @@ $ cmake ..
 $ make
 $ sudo make install
 # 4. Add source to .bashrc
-$ echo "source ACADOtoolkit/build/acado_env.sh" >> ~/.bashrc
+$ echo "source ~/ACADOtoolkit/build/acado_env.sh" >> ~/.bashrc
 ```
 
 ## Compiling

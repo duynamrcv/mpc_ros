@@ -1,1 +1,0 @@
-/usr/bin/c++    -rdynamic CMakeFiles/mpc.dir/simple_mpc.cpp.o  -o mpc -Wl,-rpath,/home/duynam/ACADOtoolkit/build/lib /home/duynam/ACADOtoolkit/build/lib/libacado_toolkit_s.so 

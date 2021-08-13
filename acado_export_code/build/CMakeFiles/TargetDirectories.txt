@@ -1,3 +1,0 @@
-/home/duynam/vast_ws/src/mpc_ros/acado_export_code/build/CMakeFiles/rebuild_cache.dir
-/home/duynam/vast_ws/src/mpc_ros/acado_export_code/build/CMakeFiles/mpc.dir
-/home/duynam/vast_ws/src/mpc_ros/acado_export_code/build/CMakeFiles/edit_cache.dir
