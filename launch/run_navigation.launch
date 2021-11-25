@@ -2,9 +2,10 @@
     <node pkg="mpc_ros" type="mpc_navigation" name="mpc_navigation" output="screen">
         <param name="weight_x"  type="double"   value="100.0" />
         <param name="weight_y"  type="double"   value="100.0" />
-        <param name="weight_q"  type="double"   value="0.5" />
+        <param name="weight_q"  type="double"   value="10" />
         <param name="weight_vx" type="double"   value="10.0" />
         <param name="weight_vy" type="double"   value="10.0" />
         <param name="weight_w"  type="double"   value="5.0" />
+        <param name="num"       type="int"      value="5" />
     </node>
 </launch>

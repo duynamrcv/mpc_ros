@@ -79,6 +79,16 @@ bool is_target(nav_msgs::Odometry cur, double goal_x, double goal_y)
 	else return false;
 }
 
+float quaternion2Yaw(geometry_msgs::Quaternion orientation)
+{
+    double q0 = orientation.x;
+    double q1 = orientation.y;
+    double q2 = orientation.z;
+    double q3 = orientation.w;
+
+    float yaw = atan2(2.0*(q2*q3 + q0*q1), 1.0 - 2.0*(q1*q1 + q2*q2));
+    return yaw;
+}
 
 int main(int argc, char **argv)
 {
@@ -159,29 +169,24 @@ int main(int argc, char **argv)
 
 		for (int i = 0; i < ACADO_N; i++)
 		{			
-			double pred_x, pred_y;
-			if (count+i >= path.poses.size())
+			double pred_x, pred_y, pred_q;
+			if (count + i >= path.poses.size())
 			{
 				pred_x = path.poses[path.poses.size()-1].pose.position.x;
 				pred_y = path.poses[path.poses.size()-1].pose.position.y;
+				pred_q = quaternion2Yaw(path.poses[path.poses.size()-1].pose.orientation);
 				ptsx.push_back(pred_x);
 				ptsy.push_back(pred_y);
-				ptsq.push_back(0);
+				ptsq.push_back(pred_q);
 			}
 			else
 			{
 				pred_x = path.poses[count+i].pose.position.x;
 				pred_y = path.poses[count+i].pose.position.y;
+				pred_q = quaternion2Yaw(path.poses[count+i].pose.orientation);
 				ptsx.push_back(pred_x);
 				ptsy.push_back(pred_y);
-				if(i == 0) ptsq.push_back(pq);
-				else
-				{
-					double delta_x = path.poses[count+i].pose.position.x - path.poses[count+i-1].pose.position.x;
-					double delta_y = path.poses[count+i].pose.position.y - path.poses[count+i-1].pose.position.y;
-					double theta = atan2(delta_y, delta_x);
-					ptsq.push_back(theta);
-				}
+				ptsq.push_back(pred_q);
 			}
 		}
 

@@ -63,6 +63,7 @@ vector<double> update_states(vector<double> state, double vx_cmd, double vy_cmd,
 
 /* ROS PARAMS*/
 double weight_x, weight_y, weight_q, weight_vx, weight_vy, weight_w;
+int num;
 
 nav_msgs::Odometry odom;
 void stateCallback(const nav_msgs::Odometry& msg) { odom = msg; }
@@ -79,6 +80,16 @@ bool is_target(nav_msgs::Odometry cur, double goal_x, double goal_y)
 	else return false;
 }
 
+float quaternion2Yaw(geometry_msgs::Quaternion orientation)
+{
+    double q0 = orientation.x;
+    double q1 = orientation.y;
+    double q2 = orientation.z;
+    double q3 = orientation.w;
+
+    float yaw = atan2(2.0*(q2*q3 + q0*q1), 1.0 - 2.0*(q1*q1 + q2*q2));
+    return yaw;
+}
 
 int main(int argc, char **argv)
 {
@@ -86,7 +97,7 @@ int main(int argc, char **argv)
     ros::NodeHandle nh("~");
 
     ros::Subscriber state_sub = nh.subscribe("/odom", 10, stateCallback);
-    ros::Subscriber path_sub = nh.subscribe("/move_base/NavfnROS/plan", 10, pathCallback);
+    ros::Subscriber path_sub = nh.subscribe("/move_base/GlobalPlanner/plan", 10, pathCallback);
 
     ros::Publisher vel_pub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 10);
 	ros::Publisher predict_pub = nh.advertise<nav_msgs::Path>("/predict_path", 10);
@@ -99,6 +110,7 @@ int main(int argc, char **argv)
 	ros::param::get("~weight_vx", weight_vx);
 	ros::param::get("~weight_vy", weight_vy);
 	ros::param::get("~weight_w", weight_w);
+	ros::param::get("~num", num);
 
 	cout << weight_x << " " << weight_y << " " << weight_q << endl;
 
@@ -155,32 +167,27 @@ int main(int argc, char **argv)
 
 		// Reference state
 		vector<double> ptsx, ptsy, ptsq;
-
+		
 		for (int i = 0; i < ACADO_N; i++)
 		{			
-			double pred_x, pred_y;
-			if (i >= path.poses.size())
+			double pred_x, pred_y, pred_q;
+			if (num*i >= path.poses.size())
 			{
 				pred_x = path.poses[path.poses.size()-1].pose.position.x;
 				pred_y = path.poses[path.poses.size()-1].pose.position.y;
+				pred_q = quaternion2Yaw(path.poses[path.poses.size()-1].pose.orientation);
 				ptsx.push_back(pred_x);
 				ptsy.push_back(pred_y);
-				ptsq.push_back(0);
+				ptsq.push_back(pred_q);
 			}
 			else
 			{
-				pred_x = path.poses[i].pose.position.x;
-				pred_y = path.poses[i].pose.position.y;
+				pred_x = path.poses[num*i].pose.position.x;
+				pred_y = path.poses[num*i].pose.position.y;
+				pred_q = quaternion2Yaw(path.poses[num*i].pose.orientation);
 				ptsx.push_back(pred_x);
 				ptsy.push_back(pred_y);
-				if(i == 0) ptsq.push_back(pq);
-				else
-				{
-					double delta_x = path.poses[i].pose.position.x - path.poses[i-1].pose.position.x;
-					double delta_y = path.poses[i].pose.position.y - path.poses[i-1].pose.position.y;
-					double theta = atan2(delta_y, delta_x);
-					ptsq.push_back(theta);
-				}
+				ptsq.push_back(pred_q);
 			}
 		}
 
