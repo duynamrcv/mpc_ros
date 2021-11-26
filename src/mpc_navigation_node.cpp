@@ -91,6 +91,23 @@ float quaternion2Yaw(geometry_msgs::Quaternion orientation)
     return yaw;
 }
 
+vector<double> correct_angle_refference(vector<double> predicted_states, vector<double> ptsq)
+{
+	vector<double> predq;
+	for (int i = 0; i < (ACADO_N + 1); ++i)
+	{
+		predq.push_back(predicted_states[i * ACADO_NX + 2]);
+	}
+	for (int i = 0; i < (ACADO_N+1); ++i)
+	{
+		double errq = ptsq[i] - predq[i];
+		if (errq > M_PI) {errq -= 2*M_PI;}
+		else if (errq < -M_PI) {errq += 2*M_PI;}
+		ptsq[i] = predq[i] + errq;
+	}
+	return ptsq;
+}
+
 int main(int argc, char **argv)
 {
     ros::init(argc, argv, "mpc_node");
@@ -197,6 +214,7 @@ int main(int argc, char **argv)
 
         // ACADO
         vector<double> predicted_states = motion_prediction(cur_state, control_output);
+		ptsq = correct_angle_refference(predicted_states, ptsq);
         vector<double> ref_states = calculate_ref_states(ptsx, ptsy, ptsq, reference_vx, reference_vy, reference_w);
         control_output = run_mpc_acado(predicted_states, ref_states, control_output);
 

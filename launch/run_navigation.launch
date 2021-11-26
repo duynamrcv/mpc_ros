@@ -1,4 +1,6 @@
 <launch>
+    <include file="$(find vast_gazebo)/launch/robot.launch"/>
+    <include file="$(find vast_navigation)/launch/vast_navigation.launch"/>
     <node pkg="mpc_ros" type="mpc_navigation" name="mpc_navigation" output="screen">
         <param name="weight_x"  type="double"   value="100.0" />
         <param name="weight_y"  type="double"   value="100.0" />
