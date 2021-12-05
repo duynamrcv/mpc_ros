@@ -114,7 +114,7 @@ int main(int argc, char **argv)
     ros::NodeHandle nh("~");
 
     ros::Subscriber state_sub = nh.subscribe("/odom", 10, stateCallback);
-    ros::Subscriber path_sub = nh.subscribe("/move_base/GlobalPlanner/plan", 10, pathCallback);
+    ros::Subscriber path_sub = nh.subscribe("/move_base/TebLocalPlannerROS/local_plan", 10, pathCallback);
 
     ros::Publisher vel_pub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 10);
 	ros::Publisher predict_pub = nh.advertise<nav_msgs::Path>("/predict_path", 10);

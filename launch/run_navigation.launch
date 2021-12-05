@@ -8,6 +8,6 @@
         <param name="weight_vx" type="double"   value="10.0" />
         <param name="weight_vy" type="double"   value="10.0" />
         <param name="weight_w"  type="double"   value="5.0" />
-        <param name="num"       type="int"      value="5" />
+        <param name="num"       type="int"      value="1" />
     </node>
 </launch>
